@@ -50,5 +50,5 @@ app.use(errorHandler);
 
 //Start Server
 server.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server is running on http://192.168.220.3:${PORT}`);
+  console.log(`Server is running on ${PORT}`);
 });
