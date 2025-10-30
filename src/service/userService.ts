@@ -26,7 +26,8 @@ export class UserService implements IUserService {
       try {
         await sendMail(email, "Your OTP", `Your Chattr OTP is ${otp}`);
       } catch (err: any) {
-        console.error("Failed to send OTP email:", err.message);
+        console.error("Failed to send OTP email:", err.message, err);
+        return
       }
     })();
 
