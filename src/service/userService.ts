@@ -22,7 +22,13 @@ export class UserService implements IUserService {
     const userName =
       name.toLowerCase().replace(/\s+/g, "") + Date.now().toString().slice(-4);
 
-    await sendMail(email, "Your OTP", `Your Chattr OTP is ${otp}`);
+    (async () => {
+      try {
+        await sendMail(email, "Your OTP", `Your Chattr OTP is ${otp}`);
+      } catch (err: any) {
+        console.error("Failed to send OTP email:", err.message);
+      }
+    })();
 
     const user = await this.userRepository.create({
       name,
@@ -130,5 +136,4 @@ export class UserService implements IUserService {
   async searchUsers(query: string): Promise<any[]> {
     return await this.userRepository.searchUsers(query);
   }
-
 }
