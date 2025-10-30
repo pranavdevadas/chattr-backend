@@ -20,15 +20,15 @@
     "@types/multer": "^2.0.0",
     "@types/node": "^24.6.2",
     "@types/nodemailer": "^7.0.2",
-    "@types/socket.io": "^3.0.1",
+    "@types/socket.io": "^3.0.1"
+  },
+  "dependencies": {
     "mongoose": "^8.19.0",
     "morgan": "^1.10.1",
     "nodemon": "^3.1.10",
     "socket.io": "^4.8.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
-  },
-  "dependencies": {
+    "typescript": "^5.9.3",
     "@types/node": "^24.6.2",
     "@types/cookie-parser": "^1.4.9",
     "@types/cors": "^2.8.19",
