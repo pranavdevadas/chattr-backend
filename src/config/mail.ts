@@ -19,10 +19,16 @@ export const transporter = nodemailer.createTransport({
 });
 
 export const sendMail = async (to: string, subject: string, text: string) => {
-  await transporter.sendMail({
-    from: `"Chattr" <pranavdevadas2@gmail.com>`,
-    to,
-    subject,
-    text,
-  });
+  try {   
+    let mail = await transporter.sendMail({
+      from: `"Chattr" <pranavdevadas2@gmail.com>`,
+      to,
+      subject,
+      text,
+    });
+    console.log('mail', mail);
+  } catch (err: any) {
+    console.error("Error sending email:", err.message);
+    throw new Error("Failed to send email");
+  }
 };
