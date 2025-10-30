@@ -43,7 +43,7 @@ export const sendMail = async (to: string, subject: string, text: string) => {
   try {
     const msg = {
       to,
-      from: 'no-reply@chattr.com', // This must match a verified sender domain in SendGrid
+      from: 'pranavowzie1111@gmail.com', // This must match a verified sender domain in SendGrid
       subject,
       text,
     };
