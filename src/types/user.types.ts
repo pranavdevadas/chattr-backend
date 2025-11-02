@@ -10,6 +10,7 @@ export interface IUser extends Document {
   isVerified?: boolean;
   createdAt: Date;
   updatedAt: Date;
+  fcmToken?: string;
 }
 
 export interface OtpVerificationResult {

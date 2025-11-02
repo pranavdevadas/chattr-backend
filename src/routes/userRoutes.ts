@@ -21,5 +21,9 @@ router.patch('/update-user', protect, uploadProfileImage.single('profileImage'),
 // Search User
 router.post('/search', userController.searchUsers)
 
+// Notification
+router.post('/save-fcm-token', protect, userController.saveFcmToken);
+router.post('/send-notificaton', protect, userController.sendNotification)
+
 
 export default router;

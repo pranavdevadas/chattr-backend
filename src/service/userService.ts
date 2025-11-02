@@ -4,6 +4,7 @@ import { IUser, OtpVerificationResult } from "../types/user.types";
 import { IUserRepository } from "../interface/user/IUserRepository";
 import { sendMail } from "../config/mail";
 import TokenService from "../util/generateToken";
+import admin from "../config/firebaseAdmin";
 
 @injectable()
 export class UserService implements IUserService {
@@ -129,5 +130,38 @@ export class UserService implements IUserService {
 
   async searchUsers(query: string): Promise<any[]> {
     return await this.userRepository.searchUsers(query);
+  }
+
+  async saveFcmToken(email: string, fcmToken: string): Promise<void> {
+    const user = await this.userRepository.findByEmail(email);
+    if (!user) throw new Error("User not found");
+    await this.userRepository.saveFcmToken(email, fcmToken);
+  }
+
+  async sendNotification(
+    receiverId: string,
+    title: string,
+    body: string
+  ): Promise<void> {
+    const receiver = await this.userRepository.findById(receiverId);
+    if (!receiver) throw new Error("Receiver not found");
+    if (!receiver?.fcmToken) throw new Error("Reciever has no FCM Token");
+
+    try {
+      await admin.messaging().send({
+        token: receiver.fcmToken,
+        notification: { title, body },
+        data: { receiverId },
+        android: {
+          notification: {
+            icon: "ic_notification", 
+            color: "#ffffff", 
+          },
+        },
+      });
+      console.log("Notification Send to: ", receiver.name);
+    } catch (error) {
+      console.error("Error sending notification:", error);
+    }
   }
 }

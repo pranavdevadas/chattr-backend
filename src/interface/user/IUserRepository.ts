@@ -8,5 +8,7 @@ export interface IUserRepository {
   markVerified(email: string): Promise<IUser | null>;
   markUnverified(email: string): Promise<void>;
   updateUser(email: string, updateData: any): Promise<IUser | null>;
-  searchUsers(query: string): Promise<IUser[]>
+  searchUsers(query: string): Promise<IUser[]>;
+  saveFcmToken(email: string, fcmToken: string): Promise<void>;
+  findById(id: string): Promise<IUser | null>;
 }

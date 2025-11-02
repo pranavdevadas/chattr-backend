@@ -1,4 +1,5 @@
 import mongoose, { Document } from "mongoose";
+import { IUser } from "./user.types";
 
 export interface IMessage extends Document {
   _id: mongoose.Types.ObjectId;
@@ -14,7 +15,7 @@ export interface IMessage extends Document {
 
 export interface IChat extends Document {
   _id: mongoose.Types.ObjectId;
-  participants: mongoose.Types.ObjectId[];
+  participants: IUser[];
   latestMessage?: mongoose.Types.ObjectId;
   type: "text" | "image" | "video";
   createdAt: Date;

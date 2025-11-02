@@ -16,4 +16,5 @@ export interface IMessageRepository {
   getLastMessage(chatId: string): Promise<IMessage | null>;
   markMessagesAsRead(chatId: string, userId: string): Promise<void>;
   createMessage(chatId: string,senderId: string,content: string, type?: "text" | "image" | "video"): Promise<IMessage>;
+  getChatById(chatId: string): Promise<IChat | null>;
 }

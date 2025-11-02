@@ -8,4 +8,6 @@ export interface IUserService {
   logout(email: string): Promise<void>
   updateUser(email: string, name?: string, userName?: string, profileImage?: string): Promise<IUser>
   searchUsers(query: string): Promise<any[]>
+  saveFcmToken(email: string, fcmToken: string): Promise<void>
+  sendNotification(receiverId: string, title: string, body: string): Promise<void>
 }

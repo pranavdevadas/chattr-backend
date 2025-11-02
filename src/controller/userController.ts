@@ -137,4 +137,29 @@ export class UserController {
     res.status(200).json(users);
   });
 
+  saveFcmToken = asyncHandler(async (req: Request, res: Response) => {
+    const email = req.cookies?.userEmail;
+    const { fcmToken } = req.body;
+    console.log(fcmToken);
+    if (!email) {
+      res.status(400).json({ message: "User email not found in cookies" });
+      return;
+    }
+    if (!fcmToken) {
+      res.status(400).json({ message: "FCM token is required" });
+      return;
+    }
+    await this.userService.saveFcmToken(email, fcmToken);
+    res.status(200).json({ message: "FCM token saved successfully" });
+  });
+
+  sendNotification = asyncHandler(async (req: Request, res: Response) => {
+    const { receiverId, title, body } = req.body;
+    if (!receiverId || !title || !body) {
+      res.status(400).json({ message: "userId, title and body are required" });
+      return;
+    }
+    await this.userService.sendNotification(receiverId, title, body);
+    res.status(200).json({ message: "Notification sent successfully" });
+  });
 }

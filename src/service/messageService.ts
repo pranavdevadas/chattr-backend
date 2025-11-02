@@ -86,5 +86,8 @@ export class messageService implements IMessageService {
     return message;
   }
 
-
+  async getChatById(chatId: string): Promise<IChat | null> {
+    const chat = await this.messageRepository.getChatById(chatId);
+    return chat;
+  }
 }

@@ -28,7 +28,7 @@ export class MessageRepository
       chat: chatId,
       sender: senderId,
       content,
-      type
+      type,
     });
     return message;
   }
@@ -84,5 +84,9 @@ export class MessageRepository
     );
   }
 
-
+  async getChatById(chatId: string): Promise<IChat | null> {
+    return await this.ChatModel.findById(chatId)
+      .populate("participants", "name userName profileImage email fcmToken")
+      .populate("latestMessage");
+  }
 }

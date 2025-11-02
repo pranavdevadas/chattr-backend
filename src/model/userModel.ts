@@ -9,6 +9,7 @@ const userSchema: Schema<IUser> = new Schema(
     profileImage: { type: String },
     otp: { type: Number, required: false },
     isVerified: { type: Boolean, default: false },
+    fcmToken: { type: String, default: '' },
   },
   { timestamps: true }
 );

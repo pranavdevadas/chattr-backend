@@ -56,4 +56,12 @@ export class UserRepository
       .select("_id name userName email profileImage")
       .limit(10);
   }
+
+  async saveFcmToken(email: string, fcmToken: string): Promise<void> {
+    await this.UserModel.updateOne({ email }, { fcmToken, updatedAt: new Date() });
+  }
+
+  async findById(id: string): Promise<IUser | null> {
+    return await this.UserModel.findById(id)
+  }
 }
