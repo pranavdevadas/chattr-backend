@@ -23,6 +23,12 @@ export const sendPushNotification = async (
         body: payload.body,
       },
       data: payload.data || {},
+      android: {
+        notification: {
+          icon: "ic_notification",
+          color: "#ffffff",
+        },
+      },
     });
 
     console.log("📨 Push notification sent successfully");

@@ -140,7 +140,6 @@ export class UserController {
   saveFcmToken = asyncHandler(async (req: Request, res: Response) => {
     const email = req.cookies?.userEmail;
     const { fcmToken } = req.body;
-    console.log(fcmToken);
     if (!email) {
       res.status(400).json({ message: "User email not found in cookies" });
       return;
@@ -155,6 +154,7 @@ export class UserController {
 
   sendNotification = asyncHandler(async (req: Request, res: Response) => {
     const { receiverId, title, body } = req.body;
+    console.log('tile asshoele',title)
     if (!receiverId || !title || !body) {
       res.status(400).json({ message: "userId, title and body are required" });
       return;

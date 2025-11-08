@@ -69,25 +69,14 @@ export const initSocket = (server: any) => {
           const receiver = chat.participants.find(
             (p: any) => p._id.toString() !== data.senderId
           );
-          console.log('reciever', receiver)
+          const sender = chat.participants.find(
+            (p: any) => p._id.toString() === data.senderId
+          );
           if (!receiver) {
             console.error("Receiver not found in chat participants");
             return;
           }
 
-          const receiverSockets = onlineUsers.get(receiver._id.toString());
-          if (!receiverSockets || receiverSockets.size === 0) {
-            if (receiver.fcmToken) {
-              await sendPushNotification(receiver.fcmToken, {
-                title: receiver.name,
-                body:
-                  data.content.length > 50
-                    ? data.content.slice(0, 50) + "..."
-                    : data.content,
-                data: { chatId: data.chatId },
-              });
-            }
-          }
         } catch (err) {
           console.error("Error sending message:", err);
         }

@@ -4,7 +4,9 @@ import { IUser, OtpVerificationResult } from "../types/user.types";
 import { IUserRepository } from "../interface/user/IUserRepository";
 import { sendMail } from "../config/mail";
 import TokenService from "../util/generateToken";
-import admin from "../config/firebaseAdmin";
+import admin, { sendPushNotification } from "../config/firebaseAdmin";
+
+
 
 @injectable()
 export class UserService implements IUserService {
@@ -23,7 +25,9 @@ export class UserService implements IUserService {
     const userName =
       name.toLowerCase().replace(/\s+/g, "") + Date.now().toString().slice(-4);
 
-    await sendMail(email, "Your OTP", `Your Chattr OTP is ${otp}`);
+    
+
+    await sendMail(email, "Your OTP", otp);
 
     const user = await this.userRepository.create({
       name,
@@ -44,7 +48,7 @@ export class UserService implements IUserService {
 
     if (user) {
       await this.userRepository.saveOtp(email, otp);
-      await sendMail(email, "Login OTP", `Your OTP is ${otp}`);
+      await sendMail(email, "Login OTP", otp );
       return {
         ...user,
         otp,
@@ -93,7 +97,7 @@ export class UserService implements IUserService {
 
     if (user) {
       await this.userRepository.saveOtp(email, otp);
-      await sendMail(email, "Login OTP", `Your OTP is ${otp}`);
+      await sendMail(email, "Login OTP", otp);
       return {
         ...user,
         otp,
@@ -148,16 +152,10 @@ export class UserService implements IUserService {
     if (!receiver?.fcmToken) throw new Error("Reciever has no FCM Token");
 
     try {
-      await admin.messaging().send({
-        token: receiver.fcmToken,
-        notification: { title, body },
+      await sendPushNotification(receiver.fcmToken, {
+        title,
+        body,
         data: { receiverId },
-        android: {
-          notification: {
-            icon: "ic_notification", 
-            color: "#ffffff", 
-          },
-        },
       });
       console.log("Notification Send to: ", receiver.name);
     } catch (error) {
